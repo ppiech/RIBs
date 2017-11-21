@@ -16,7 +16,7 @@
 
 package com.uber.rib.root.logged_in.tic_tac_toe;
 
-class BoardCoordinate {
+public class BoardCoordinate {
 
   private final int x;
   private final int y;

@@ -1,5 +1,6 @@
 package com.uber.rib.root.logged_out;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -20,6 +21,8 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
  * Builder for the {@link LoggedOutScope}.
+ *
+ * TODO describe this scope's responsibility as a whole.
  */
 public class LoggedOutBuilder
         extends ViewBuilder<LoggedOutView, LoggedOutRouter, LoggedOutBuilder.ParentComponent> {
@@ -47,11 +50,11 @@ public class LoggedOutBuilder
 
     @Override
     protected LoggedOutView inflateView(LayoutInflater inflater, ViewGroup parentViewGroup) {
-        return (LoggedOutView) inflater.inflate(R.layout.logged_out_rib, parentViewGroup, false);
+        return (LoggedOutView)inflater.inflate(R.layout.logged_out_rib, parentViewGroup, false);
     }
 
     public interface ParentComponent {
-        LoggedOutInteractor.Listener listener();
+        // TODO: Define dependencies required from your parent interactor here.
     }
 
     @dagger.Module

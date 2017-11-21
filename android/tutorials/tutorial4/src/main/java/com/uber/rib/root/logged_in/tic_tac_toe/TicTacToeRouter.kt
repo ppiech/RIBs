@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package com.uber.rib.root.logged_out;
+package com.uber.rib.root.logged_in.tic_tac_toe
 
-import com.uber.rib.core.ViewRouter;
+import com.uber.rib.core.InteractorBaseComponent
+import com.uber.rib.core.ViewRouter
 
 /**
- * Adds and removes children of {@link LoggedOutBuilder.LoggedOutScope}.
+ * Adds and removes children of [TicTacToeBuilder.TicTacToeScope].
  */
-public class LoggedOutRouter extends
-    ViewRouter<LoggedOutView, LoggedOutInteractor, LoggedOutBuilder.Component> {
-
-  public LoggedOutRouter(
-      LoggedOutView view,
-      LoggedOutInteractor interactor,
-      LoggedOutBuilder.Component component) {
-    super(view, interactor, component);
-  }
-}
+class TicTacToeRouter(view: TicTacToeView, interactor: TicTacToeInteractor)
+    : ViewRouter<TicTacToeView, TicTacToeInteractor,InteractorBaseComponent<TicTacToeInteractor>>(
+    view, interactor, InteractorBaseComponent { })

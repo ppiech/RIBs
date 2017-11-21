@@ -18,7 +18,7 @@ package com.uber.rib.root.logged_in.tic_tac_toe;
 
 import javax.inject.Inject;
 
-class Board {
+public class Board {
 
   static final int ROWS = 3;
   static final int COLS = 3;
@@ -27,8 +27,7 @@ class Board {
   int currentRow;
   int currentCol;
 
-  @Inject
-  Board() {
+  public Board() {
     cells = new MarkerType[ROWS][COLS];
     for (int row = 0; row < ROWS; ++row) {
       for (int col = 0; col < COLS; ++col) {

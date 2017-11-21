@@ -45,7 +45,7 @@ public class RootActivity extends RibActivity {
   @SuppressWarnings("unchecked")
   @Override
   protected ViewRouter<?, ?, ?> createRouter(ViewGroup parentViewGroup) {
-    RootBuilder rootBuilder = new RootBuilder(new RootBuilder.ParentComponent() {});
+    RootBuilder rootBuilder = new RootBuilder();
     RootRouter router = rootBuilder.build(parentViewGroup);
     rootInteractor = router.getInteractor();
     return router;

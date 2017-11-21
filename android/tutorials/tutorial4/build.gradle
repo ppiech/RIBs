@@ -17,10 +17,12 @@
 buildscript {
     dependencies {
         classpath deps.build.gradlePlugins.android
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.60"
     }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion deps.build.compileSdkVersion
@@ -56,4 +58,8 @@ dependencies {
     provided deps.apt.javax
     provided deps.apt.autoValueAnnotations
     testCompile project(":libraries:rib-test-utils")
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.60"
+}
+repositories {
+    mavenCentral()
 }

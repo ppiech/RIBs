@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 
 import com.uber.rib.core.InteractorBaseComponent;
 import com.uber.rib.core.ViewBuilder;
+import com.uber.rib.root.logged_out.LoggedOutBuilder;
 import com.uber.rib.tutorial1.R;
 
 import java.lang.annotation.Retention;
@@ -28,8 +29,6 @@ import java.lang.annotation.Retention;
 import javax.inject.Scope;
 
 import dagger.Binds;
-import dagger.BindsInstance;
-import dagger.Provides;
 
 import static java.lang.annotation.RetentionPolicy.CLASS;
 
@@ -49,12 +48,14 @@ public class RootBuilder extends ViewBuilder<RootView, RootRouter, RootBuilder.P
   public RootRouter build(ViewGroup parentViewGroup) {
     RootView view = createView(parentViewGroup);
     RootInteractor interactor = new RootInteractor();
-    Component component = DaggerRootBuilder_Component.builder()
-            .parentComponent(getDependency())
-            .view(view)
-            .interactor(interactor)
-            .build();
-    return component.rootRouter();
+    Component component = new Component() {
+      @Override
+      public void inject(RootInteractor interactor) {
+
+      }
+    };
+
+    return new RootRouter(view, interactor, component, new LoggedOutBuilder(component));
   }
 
   @Override
@@ -73,11 +74,11 @@ public class RootBuilder extends ViewBuilder<RootView, RootRouter, RootBuilder.P
     @Binds
     abstract RootInteractor.RootPresenter presenter(RootView view);
 
-    @RootScope
-    @Provides
-    static RootRouter router(Component component, RootView view, RootInteractor interactor) {
-      return new RootRouter(view, interactor, component);
-    }
+//    @RootScope
+//    @Provides
+//    static RootRouter router(Component component, RootView view, RootInteractor interactor) {
+//      return new RootRouter(view, interactor, component, new LoggedOutBuilder(component));
+//    }
   }
 
   @RootScope
@@ -85,24 +86,12 @@ public class RootBuilder extends ViewBuilder<RootView, RootRouter, RootBuilder.P
     modules = Module.class,
     dependencies = ParentComponent.class
   )
-  interface Component extends InteractorBaseComponent<RootInteractor>, BuilderComponent {
+  interface Component extends InteractorBaseComponent<RootInteractor>, BuilderComponent, LoggedOutBuilder.ParentComponent {
 
-    @dagger.Component.Builder
-    interface Builder {
-      @BindsInstance
-      Builder interactor(RootInteractor interactor);
-
-      @BindsInstance
-      Builder view(RootView view);
-
-      Builder parentComponent(ParentComponent component);
-
-      Component build();
-    }
   }
 
   interface BuilderComponent {
-    RootRouter rootRouter();
+    //RootRouter rootRouter();
   }
 
   @Scope

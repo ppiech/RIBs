@@ -25,8 +25,6 @@ import com.uber.autodispose.LifecycleEndedException;
 import com.uber.autodispose.LifecycleScopeProvider;
 import com.uber.rib.core.lifecycle.InteractorEvent;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
@@ -34,12 +32,12 @@ import static com.uber.rib.core.lifecycle.InteractorEvent.ACTIVE;
 import static com.uber.rib.core.lifecycle.InteractorEvent.INACTIVE;
 
 /**
- * The base implementation for all {@link Interactor}s.
+ * The base implementation for all {@link NoDaggerInteractor}s.
  *
  * @param <P> the type of {@link Presenter}.
  * @param <R> the type of {@link Router}.
  */
-public abstract class Interactor<P, R extends Router>
+public abstract class NoDaggerInteractor<P, R extends Router>
     implements LifecycleScopeProvider<InteractorEvent> {
 
   private static final Function<InteractorEvent, InteractorEvent> LIFECYCLE_MAP_FUNCTION =
@@ -55,17 +53,16 @@ public abstract class Interactor<P, R extends Router>
         }
       };
 
-  @Inject P presenter;
+  final P presenter;
 
   private final BehaviorRelay<InteractorEvent> behaviorRelay = BehaviorRelay.create();
   private final Relay<InteractorEvent> lifecycleRelay = behaviorRelay.toSerialized();
 
   @Nullable private R router;
 
-  protected void setPresenter(P presenter) {
+  protected NoDaggerInteractor(P presenter) {
     this.presenter = presenter;
   }
-
 
   /** @return the router for this interactor. */
   public R getRouter() {
@@ -104,8 +101,8 @@ public abstract class Interactor<P, R extends Router>
   }
 
   /**
-   * Called when detached. The {@link Interactor} should do its cleanup here. Note: View will be
-   * removed automatically so {@link Interactor} doesn't have to remove its view here.
+   * Called when detached. The {@link NoDaggerInteractor} should do its cleanup here. Note: View will be
+   * removed automatically so {@link NoDaggerInteractor} doesn't have to remove its view here.
    */
   protected void willResignActive() {}
 
